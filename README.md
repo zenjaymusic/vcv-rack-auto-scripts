@@ -47,7 +47,7 @@ That’s it. You now have the entire free ecosystem downloaded — and future-pr
 ## 💡 Tips
 
 - Mac / Windows / Linux supported
-- Works on Chrome, Firefox, Edge
+- Works on Opera GX, Chrome, Firefox, Edge
 - Handles VCV's single-page app routing (SPA-safe)
 - Only acts on what’s visible — **you control what it runs on**
 
