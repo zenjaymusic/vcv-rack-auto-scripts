@@ -1,68 +1,66 @@
-# VCV Rack Auto Scripts 🎛️⚡
+# VCV Rack Auto Scripts 🎛️
 
-Automate your entire VCV Rack free plugin and module setup with a single install.  
-No more clicking thousands of buttons manually.
+Automate your full VCV Rack free plugin + module setup in one click.
 
-Created by **zen**
-
----
-
-## 💾 Scripts Included
-
-### 🔹 Auto-Subscribe to All Free Plugins (`plugin-subscribe-all.user.js`)
-Subscribes to every visible free plugin on the [VCV Plugins page](https://library.vcvrack.com/plugins?license=free).
-
-> ✅ Automatically installs all current modules  
-> 🔁 Automatically receives any future modules from that developer
-
-- One-time run
-- Works on any system
-- Safe to rerun — skips plugins you’re already subscribed to
-
-📥 **[View Script](./plugin-subscribe-all.user.js)**
+Built by **zen** — for friends, patchers, and anyone sick of clicking 3,000 times.
 
 ---
 
-### 🔹 Auto-Add All Free Modules (`module-add-all.user.js`)
-Adds every individual free module on the [VCV Library Modules page](https://library.vcvrack.com/?license=free), page by page.
+## 💾 What's Included
 
-> 🚀 Fast, batched clicking (10 at a time)  
-> 🔄 Auto-turns the page  
-> ⏱️ Runs until every free module is added
+### 🔹 `plugin-subscribe-all.user.js`
+Subscribes to all visible plugins on the page.  
+You get all their current and future modules automatically via VCV’s sync.
 
-📥 **[View Script](./module-add-all.user.js)**
+⚠️ **Use the Free filter** to avoid subscribing to paid plugins by mistake.  
+📍 [VCV Free Plugins Page](https://library.vcvrack.com/plugins?license=free)
+
+---
+
+### 🔹 `module-add-all.user.js`
+Adds every visible module on the page, batching 10 at a time, and auto-advances through the VCV Library.
+
+⚠️ **Apply the Free filter and start on page 1.**  
+This script clicks all visible “Add” buttons — no price checking.  
+📍 [VCV Free Modules Page](https://library.vcvrack.com/?license=free)
+
+---
+
+### 🔹 `index.html` *(Offline USB GUI)*
+A simple offline launcher to install these scripts locally.  
+Great for sharing via USB or installing on a friend's setup.
 
 ---
 
 ## 🛠️ How to Use
 
-1. Install [Tampermonkey](https://www.tampermonkey.net/) for your browser
-2. Click the script links above and click **Install**
-3. Visit the corresponding VCV Library pages (Plugins or Modules)
-4. Watch the script do its thing
+1. Install [Tampermonkey](https://www.tampermonkey.net/) in your browser
+2. Install the scripts by clicking them here or from `index.html`
+3. Open the VCV Library (use the Free filter links above)
+4. Let the scripts run — they’ll do everything
 5. Open VCV Rack → **Library > Update All**
 
-Done. You now have the entire free ecosystem downloaded and future-proofed.
+That’s it. You now have the entire free ecosystem downloaded — and future-proofed.
 
 ---
 
-## 💡 Pro Tips
+## 💡 Tips
 
-- Works on **Mac, Windows, and Linux**
-- Compatible with **Chrome, Firefox, and Edge**
-- Uses simulated clicks, works with VCV’s SPA (React frontend)
-- Only targets free content — no risk of adding paid plugins
+- Mac / Windows / Linux supported
+- Works on Chrome, Firefox, Edge
+- Handles VCV's single-page app routing (SPA-safe)
+- Only acts on what’s visible — **you control what it runs on**
 
 ---
 
 ## 🧙 Author
 
 **zen**  
-Just a nerd making modular life easier.
+> just automation for artists who want to create, not click.
 
 ---
 
 ## 🔓 License
 
-MIT — use it, remix it, share it.  
-A star on the repo helps others find it ⭐
+MIT — share freely, rack responsibly  
+Give it a ⭐ if it saved your wrist.
