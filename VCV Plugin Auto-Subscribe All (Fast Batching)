@@ -1,0 +1,73 @@
+// ==UserScript==
+// @name         VCV Plugin Auto-Subscribe All (Fast Batching)
+// @namespace    https://vcvrack.com/
+// @version      1.1
+// @description  Subscribes to all free VCV plugins using fast batching. Handles async updates, skips already subscribed. Made by zen 🎛️⚡️
+// @author       zen
+// @match        https://library.vcvrack.com/plugins*
+// @grant        none
+// ==/UserScript==
+
+(function () {
+    'use strict';
+
+    const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+    const BATCH_SIZE = 10;
+
+    function simulateClick(element) {
+        const event = new MouseEvent('click', {
+            bubbles: true,
+            cancelable: true,
+            view: window
+        });
+        element.dispatchEvent(event);
+    }
+
+    async function waitForSubscribeChange(btn, timeout = 5000) {
+        const start = Date.now();
+        while (btn.textContent.includes("Subscribe")) {
+            if (Date.now() - start > timeout) return false;
+            await delay(100);
+        }
+        return true;
+    }
+
+    async function clickButtonsInBatches(buttons, batchSize = BATCH_SIZE) {
+        for (let i = 0; i < buttons.length; i += batchSize) {
+            const batch = buttons.slice(i, i + batchSize);
+            console.log(`🚀 Subscribing to batch ${i / batchSize + 1} of ${Math.ceil(buttons.length / batchSize)}`);
+
+            batch.forEach(btn => simulateClick(btn));
+            const results = await Promise.all(batch.map(btn => waitForSubscribeChange(btn)));
+
+            results.forEach((success, idx) => {
+                const label = `plugin ${i + idx + 1}`;
+                if (success) {
+                    console.log(`✅ Subscribed to ${label}`);
+                } else {
+                    console.warn(`⚠️ Timeout on ${label}`);
+                }
+            });
+
+            await delay(500); // short delay between batches
+        }
+    }
+
+    async function clickAllSubscribeButtons() {
+        const buttons = [...document.querySelectorAll('button')]
+            .filter(btn => btn.textContent.includes("Subscribe") && btn.offsetParent !== null);
+
+        if (buttons.length === 0) {
+            console.log("✅ All plugins already subscribed!");
+            return;
+        }
+
+        console.log(`📦 Found ${buttons.length} plugins to subscribe to...`);
+        await clickButtonsInBatches(buttons);
+        console.log("🎉 All subscriptions complete!");
+    }
+
+    window.addEventListener('load', () => {
+        setTimeout(clickAllSubscribeButtons, 2000);
+    });
+})();
