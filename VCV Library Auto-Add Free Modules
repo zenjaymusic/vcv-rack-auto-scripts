@@ -1,0 +1,108 @@
+// ==UserScript==
+// @name         VCV Library Auto-Add Free Modules (v3.4 REAL Pagination Arrow Fix)
+// @namespace    https://vcvrack.com/
+// @version      3.4
+// @description  Auto-adds all free VCV modules and clicks the true right-arrow <a> element, supports batching and SPA. Fully working. Built for Jason's sanity 😎🎚️🧠
+// @author       zen
+// @match        https://library.vcvrack.com/*
+// @grant        none
+// ==/UserScript==
+
+(function () {
+    'use strict';
+
+    const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+    const BATCH_SIZE = 10;
+
+    function simulateClick(element) {
+        const event = new MouseEvent('click', {
+            bubbles: true,
+            cancelable: true,
+            view: window
+        });
+        element.dispatchEvent(event);
+    }
+
+    async function waitForChange(btn, timeout = 5000) {
+        const start = Date.now();
+        while (btn.textContent.trim() === "Add") {
+            if (Date.now() - start > timeout) {
+                return false;
+            }
+            await delay(100);
+        }
+        return true;
+    }
+
+    async function clickButtonsInBatches(buttons, batchSize = BATCH_SIZE) {
+        for (let i = 0; i < buttons.length; i += batchSize) {
+            const batch = buttons.slice(i, i + batchSize);
+            console.log(`🚀 Processing batch ${i / batchSize + 1} of ${Math.ceil(buttons.length / batchSize)}`);
+
+            batch.forEach(btn => simulateClick(btn));
+
+            const results = await Promise.all(batch.map(btn => waitForChange(btn)));
+
+            results.forEach((success, idx) => {
+                if (success) {
+                    console.log(`✅ Added module ${i + idx + 1}`);
+                } else {
+                    console.warn(`⚠️ Timeout on module ${i + idx + 1}`);
+                }
+            });
+
+            await delay(500);
+        }
+    }
+
+    function getNextArrowLink() {
+        const links = [...document.querySelectorAll('a.button-ghost')];
+        return links.find(link => {
+            const icon = link.querySelector('i.fa-chevron-right');
+            return !!icon && link.offsetParent !== null;
+        });
+    }
+
+    async function processPage() {
+        if (window.__vcvScriptRunning__) return;
+        window.__vcvScriptRunning__ = true;
+
+        const addButtons = [...document.querySelectorAll('button, a')].filter(btn =>
+            btn.textContent.trim() === "Add" && btn.offsetParent !== null
+        );
+
+if (addButtons.length === 0) {
+    console.log("ℹ️ No Add buttons on this page — checking if there's a next page...");
+    const nextLink = getNextArrowLink();
+    if (nextLink) {
+        console.log("➡️ Skipping to next page...");
+        simulateClick(nextLink);
+    } else {
+        console.log("🏁 No more pages to visit. Done!");
+    }
+    await delay(2000);
+    window.__vcvScriptRunning__ = false;
+    return;
+}
+
+        console.log(`🟢 Found ${addButtons.length} Add buttons. Beginning batch processing...`);
+        await clickButtonsInBatches(addButtons);
+
+        await delay(1000);
+
+        const nextLink = getNextArrowLink();
+        if (nextLink) {
+            console.log("➡️ Clicking next page arrow...");
+            simulateClick(nextLink);
+        } else {
+            console.log("🏁 Done! No more pages.");
+        }
+
+        await delay(2000);
+        window.__vcvScriptRunning__ = false;
+    }
+
+    setInterval(() => {
+        requestIdleCallback(processPage);
+    }, 3000);
+})();
