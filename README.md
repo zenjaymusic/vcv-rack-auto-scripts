@@ -1,66 +1,58 @@
-# VCV Rack Auto Scripts 🎛️
+# VCV Rack Auto Scripts
 
-Automate your full VCV Rack free plugin + module setup in one click.
-
-Built by **zen** — for friends, patchers, and anyone sick of clicking 3,000 times.
+Tampermonkey userscripts that automate tedious tasks in the VCV Rack library — subscribing to plugins and adding free modules across paginated results.
 
 ---
 
-## 💾 What's Included
+## Scripts
 
-### 🔹 `plugin-subscribe-all.user.js`
-Subscribes to all visible plugins on the page.  
-You get all their current and future modules automatically via VCV’s sync.
+### 1. VCV Plugin Auto-Subscribe All
 
-⚠️ **Use the Free filter** to avoid subscribing to paid plugins by mistake.  
-📍 [VCV Free Plugins Page](https://library.vcvrack.com/plugins?license=free)
+Automatically subscribes to every free VCV plugin on the library plugins page in fast batches.
 
----
+**What it does:**
+- Finds all visible Subscribe buttons on the page
+- Clicks them in batches of 10
+- Waits for each subscription to confirm before moving to the next batch
+- Skips plugins you're already subscribed to
+- Logs progress to the browser console
 
-### 🔹 `module-add-all.user.js`
-Adds every visible module on the page, batching 10 at a time, and auto-advances through the VCV Library.
+**Install:** [VCV Plugin Auto-Subscribe All](https://github.com/zenjaymusic/vcv-rack-auto-scripts/raw/refs/heads/main/VCV%20Plugin%20Auto-Subscribe%20All%20(Fast%20Batching))
 
-⚠️ **Apply the Free filter and start on page 1.**  
-This script clicks all visible “Add” buttons — no price checking.  
-📍 [VCV Free Modules Page](https://library.vcvrack.com/?license=free)
-
----
-
-### 🔹 `index.html` *(Offline USB GUI)*
-A simple offline launcher to install these scripts locally.  
-Great for sharing via USB or installing on a friend's setup.
+**Usage:** Navigate to `https://library.vcvrack.com/plugins` and the script runs automatically on page load.
 
 ---
 
-## 🛠️ How to Use
+### 2. VCV Library Auto-Add Free Modules
 
-1. Install [Tampermonkey](https://www.tampermonkey.net/) in your browser
-2. Install the scripts by clicking them here or from `index.html`
-3. Open the VCV Library (use the Free filter links above)
-4. Let the scripts run — they’ll do everything
-5. Open VCV Rack → **Library > Update All**
+Automatically clicks Add on every free module across all paginated pages of the VCV library.
 
-That’s it. You now have the entire free ecosystem downloaded — and future-proofed.
+**What it does:**
+- Finds all Add buttons on the current page
+- Clicks them in batches of 10
+- Waits for each module to confirm before continuing
+- Automatically clicks the next page arrow and repeats until all pages are done
+- Handles VCV's SPA navigation correctly
 
----
+**Install:** [VCV Library Auto-Add Free Modules](https://github.com/zenjaymusic/vcv-rack-auto-scripts/raw/refs/heads/main/VCV%20Library%20Auto-Add%20Free%20Modules)
 
-## 💡 Tips
-
-- Mac / Windows / Linux supported
-- Works on Opera GX, Chrome, Firefox, Edge
-- Handles VCV's single-page app routing (SPA-safe)
-- Only acts on what’s visible — **you control what it runs on**
+**Usage:** Navigate to `https://library.vcvrack.com` and the script runs automatically, paging through the entire library until complete.
 
 ---
 
-## 🧙 Author
+## Installation
 
-**zen**  
-> just automation for artists who want to create, not click.
+1. Install [Tampermonkey](https://www.tampermonkey.net/) for your browser
+2. Click an install link above
+3. Click **Install** in the Tampermonkey prompt
+4. Navigate to the relevant VCV library page — the script will run automatically
 
----
+## Notes
 
-## 🔓 License
+- You must be logged in to your VCV Rack account for subscriptions and adds to save
+- Progress is logged to the browser console (F12 → Console) if you want to monitor it
+- Both scripts run in batches to avoid overwhelming the VCV library server
 
-MIT — share freely, rack responsibly  
-Give it a ⭐ if it saved your wrist.
+## License
+
+MIT — free to use, modify, and share.
